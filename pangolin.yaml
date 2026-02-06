@@ -1,3 +1,4 @@
 server:
-  port: 8080
+  # This must match the port in your Dockerfile/Dokploy settings
+  port: 8888
   domain: "pangolin.oxooz.com"
