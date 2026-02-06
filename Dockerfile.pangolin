@@ -1,0 +1,10 @@
+FROM ubuntu:24.04
+RUN apt-get update && apt-get install -y curl ca-certificates && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+# Fetches the ARM64 binary for Oracle RK-AD [cite: 32]
+RUN curl -fsSL https://static.pangolin.net/get-installer.sh | bash -s -- --bin-only
+RUN mkdir -p /app/config
+VOLUME /app/config
+EXPOSE 3000 3001 3002
+# Authoritative config path 
+CMD ["pangolin", "server", "--config", "/app/config/config.yml"]
