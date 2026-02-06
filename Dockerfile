@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-# Install essential tools
+# 1. Install tools so the installer doesn't try to install them again
 RUN apt-get update && apt-get install -y \
     curl \
     wget \
@@ -11,11 +11,9 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Download the installer now so it's ready for you
+# 2. Pre-download the installer 
 RUN curl -fsSL https://static.pangolin.net/get-installer.sh | bash || true
-
-# Give it execution permissions
 RUN if [ -f "./installer" ]; then chmod +x ./installer; fi
 
-# This keeps the container running forever so you can log in
+# 3. Stay alive so you can access the Dokploy terminal
 CMD ["tail", "-f", "/dev/null"]
