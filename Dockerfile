@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-# 1. Install required tools for the Pangolin script
+# Install essential tools
 RUN apt-get update && apt-get install -y \
     curl \
     wget \
@@ -11,13 +11,11 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# 2. Run the official installer
-# Note: We use 'bash' because the script you checked is application/x-sh
+# Download the installer now so it's ready for you
 RUN curl -fsSL https://static.pangolin.net/get-installer.sh | bash || true
 
-# 3. Give the installer permission and run it
-# If the script downloads a file named 'installer', this runs it.
-RUN if [ -f "./installer" ]; then chmod +x ./installer && ./installer --accept-license; fi
+# Give it execution permissions
+RUN if [ -f "./installer" ]; then chmod +x ./installer; fi
 
-# Default port for Pangolin Dashboard
-EXPOSE 80 443 51820
+# This keeps the container running forever so you can log in
+CMD ["tail", "-f", "/dev/null"]
