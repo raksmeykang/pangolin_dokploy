@@ -1,6 +1,5 @@
 server:
-  domain: pangolin.oxooz.com
-  port: 8080
+  port: 3001
 storage:
   type: sqlite
   path: /app/config/db/db.sqlite
