@@ -1,5 +1,0 @@
-server:
-  port: 3001
-storage:
-  type: sqlite
-  path: /app/config/db/db.sqlite
