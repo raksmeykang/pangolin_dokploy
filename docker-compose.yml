@@ -5,13 +5,11 @@ services:
     restart: unless-stopped
     volumes:
       - ./config:/app/config
-    # We remove the healthcheck for now so Dokploy doesn't kill it
-    
+
   gerbil:
     image: docker.io/fosrl/gerbil:1.3.0
     container_name: gerbil
     restart: unless-stopped
-    # We change this to just 'started' instead of 'healthy'
     depends_on:
       - pangolin
     command:
@@ -26,3 +24,4 @@ services:
     ports:
       - 51820:51820/udp
       - 21820:21820/udp
+      # NO 80 or 443 listed here at all!
