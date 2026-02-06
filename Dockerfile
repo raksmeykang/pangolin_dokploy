@@ -1,18 +1,22 @@
+# Use Ubuntu 24.04 (Matches your RK-AD Host)
 FROM ubuntu:24.04
+
+# Install dependencies for the installer
 RUN apt-get update && apt-get install -y curl ca-certificates && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /opt/pangolin
 
-# Download the latest Pangolin binary directly
+# FORCE: Download the latest binary directly (Detects ARM64 automatically)
 RUN curl -fsSL https://static.pangolin.net/get-installer.sh | bash -s -- --bin-only
 
 # Create config directory
 RUN mkdir -p /opt/pangolin/config
 
-# Persistence
+# Persistence Volume
 VOLUME /opt/pangolin/config
 
-# Port you want to use (Change 8888 to your custom port)
+# Your custom port
 EXPOSE 8888
 
-# Forced Start Command
+# FORCE START: Point exactly to the config and the port
 CMD ["/usr/local/bin/pangolin", "server", "--config", "/opt/pangolin/config/pangolin.yaml", "--port", "8888"]
