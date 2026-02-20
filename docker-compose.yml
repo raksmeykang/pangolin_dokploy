@@ -1,12 +1,11 @@
-version: '3.8'
 services:
-  pangolin:
-    image: docker.io/fosrl/pangolin:ee-1.15.2
-    container_name: pangolin-app
+  pangolin-setup:
+    build: .
+    container_name: pangolin_installer
     restart: always
-    environment:
-      - PANGOLIN_DOMAIN=pg.oxooz.com:8443
+    # Map the ports you need for the final app
+    ports:
+      - "8443:443"
+      - "51821:51820/udp"
     volumes:
-      # USE THE FULL PATH TO YOUR GITHUB FOLDER ON THE SERVER
-      - /var/lib/dokploy/applications/pangolin/config:/app/config
-    # DO NOT PUT PORTS HERE - DOKPLOY UI OVERRIDES THIS
+      - ./config:/app/config
