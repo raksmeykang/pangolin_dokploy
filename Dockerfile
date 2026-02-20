@@ -1,19 +1,15 @@
-FROM ubuntu:22.04
+# Use the official Pangolin EE image (matches your compose file)
+FROM docker.io/fosrl/pangolin:ee-1.15.2
 
-# 1. Install tools so the installer doesn't try to install them again
-RUN apt-get update && apt-get install -y \
-    curl \
-    wget \
-    sudo \
-    jq \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
-
+# Set the working directory
 WORKDIR /app
 
-# 2. Pre-download the installer 
-RUN curl -fsSL https://static.pangolin.net/get-installer.sh | bash || true
-RUN if [ -f "./installer" ]; then chmod +x ./installer; fi
+# Ensure we have the necessary permissions for the config volume
+# This prevents 'Permission Denied' errors in Dokploy
+RUN mkdir -p /app/config && chmod -R 755 /app/config
 
-# 3. Stay alive so you can access the Dokploy terminal
-CMD ["tail", "-f", "/dev/null"]
+# Document the ports used (Pangolin uses 443 for its internal Traefik)
+EXPOSE 80 443
+
+# The entrypoint is already defined in the base image, 
+# so we don't need a CMD or ENTRYPOINT line.
