@@ -9,7 +9,7 @@ services:
       - pangolin_config:/app/config
     ports:
       - "8443:443"      # Browser access at https://pg.oxooz.com:8443
-      - "51821:51820/udp" # VPN access (changed to 51821 to avoid conflict)
+      - "51820:51820/udp" # VPN access (changed to 51821 to avoid conflict)
 
 volumes:
   pangolin_config:
