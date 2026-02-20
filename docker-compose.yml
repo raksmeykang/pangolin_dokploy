@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   pangolin:
     build: .
@@ -6,10 +7,24 @@ services:
     environment:
       - PANGOLIN_DOMAIN=pg.oxooz.com:8443
     volumes:
-      - pangolin_config:/app/config
+      - ./config:/app/config
     ports:
-      - "8443:443"      # Browser access at https://pg.oxooz.com:8443
-      - "51820:51820/udp" # VPN access (changed to 51821 to avoid conflict)
+      - "8443:443"
+    depends_on:
+      - gerbil
+
+  gerbil:
+    image: docker.io/fosrl/gerbil:1.3.0
+    container_name: gerbil
+    restart: always
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    volumes:
+      - ./config:/var/config
+    ports:
+      - "51821:51820/udp"
+      - "21820:21820/udp"
 
 volumes:
   pangolin_config:
