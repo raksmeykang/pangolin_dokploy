@@ -1,0 +1,7 @@
+app:
+  dashboard_url: "https://pg.oxooz.com:8443"
+  setup_token: ""
+
+database:
+  type: sqlite
+  path: /app/config/pangolin.db
